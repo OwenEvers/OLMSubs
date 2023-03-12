@@ -1,0 +1,30 @@
+<RCC>
+  <qresource prefix="BGs">
+    <file>Images/BVSoftwareSML.png</file>
+    <file>Images/OLM Alien.png</file>
+    <file>Images/MWBottomTop.png</file>
+    <file>Images/MWBottomLeft.png</file>
+    <file>Images/MWFull.png</file>
+    <file>Images/Transparent.png</file>
+    <file>Images/MWinTop.png</file>
+    <file>Images/MWinBottom.png</file>
+  </qresource>
+  <qresource prefix="Icons">
+    <file>Images/fi-bs-search.svg</file>
+    <file>Images/fi-bs-delete-user.svg</file>
+    <file>Images/fi-bs-list.svg</file>
+    <file>Images/fi-bs-info.svg</file>
+    <file>Images/fi-bs-user-add.svg</file>
+    <file>Images/fi-bs-exit.svg</file>
+    <file>Images/fi-bs-lock.svg</file>
+  </qresource>
+  <qresource prefix="Buttons">
+    <file>Images/LogInBTN.png</file>
+    <file>Images/ExitBTN.png</file>
+    <file>Images/AboutBTN.png</file>
+    <file>Images/BTNSubsInfo.png</file>
+    <file>Images/BTNListSubs.png</file>
+    <file>Images/BTNAddSubs.png</file>
+    <file>Images/BTNDelSubs.png</file>
+  </qresource>
+</RCC>

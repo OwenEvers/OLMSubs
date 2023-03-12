@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="AboutImages">
+    <file>Images/OLM Alien.png</file>
+    <file>Images/ExitBTN.png</file>
+    <file>Images/BVSoftwareSML.png</file>
+  </qresource>
+</RCC>

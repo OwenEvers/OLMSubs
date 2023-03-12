@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="windows">
+    <file>MainLogOntop.png</file>
+    <file>bottombar.png</file>
+  </qresource>
+  <qresource prefix="Icons">
+    <file>OLM Alien.png</file>
+  </qresource>
+  <qresource prefix="Buttons">
+    <file>LogInBTN.png</file>
+    <file>ExitBTN.png</file>
+    <file>AboutBTN.png</file>
+  </qresource>
+</RCC>
