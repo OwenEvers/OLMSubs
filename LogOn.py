@@ -1,3 +1,6 @@
+# This is the py to run first
+
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QMessageBox
@@ -516,7 +519,7 @@ class Ui_LogOnUI(object):
         self.Main_UI.close()
         LogOnUI.show()
 
-
+#               End Main UI Window
 #########################################################################################
 #               About Window
     def openAbout(self):
@@ -544,6 +547,10 @@ class Ui_LogOnUI(object):
         self.About_UI.close()
         LogOnUI.show()
 
+#                               End About
+###############################################################################################
+#                               UI setup - LOG ON Window
+#                               pushbutton.connects set below
     def setupUi(self, LogOnUI):
         LogOnUI.setObjectName("LogOnUI")
         LogOnUI.resize(1000, 629)
@@ -653,7 +660,9 @@ class Ui_LogOnUI(object):
         self.pushButton_Exit.setToolTip(_translate("LogOnUI", "Exit - Quit"))
         self.pushButton_About.setToolTip(_translate("LogOnUI", "About OLM-LCARS"))
 
-
+#                           End Logon UI
+#########################################################################################
+#                           Magazine ISSUE - Get details
 class Issues(object):
 
     def __init__(self):
@@ -713,8 +722,9 @@ class Issues(object):
         month = find_month(int(self.nextmonth))
         return month
 
-
-# issueNumber = []
+#
+############################################################################################
+#                           Lists
 issueMonth = []  # needed
 issueYear = []  # needed
 issueDate = []  # holds YEARS only
@@ -723,7 +733,7 @@ Subscribers = []  # All info: Email, Name, Years, FirstIssue, LastIssue, Active(
 subsActive = []  # List All Active subs from Subscribers (Active = Y)
 subsLastIssue = []  # List All who are on Last issue
 subsNotActive = []  # List All who are NO LONGER Active
-f = open('OLMIssueDates.csv', 'r')
+f = open('OLMIssueDates.csv', 'r')  # Issues
 readList = csv.reader(f)
 header = next(readList)
 for row in readList:
@@ -738,19 +748,17 @@ header = next(readList)
 num = 0
 for row in readList:
     Subscribers.append(row)
-
     num = num + 1
-db = num
+db = num                    # num replaced by len() insure is num still used?
+
+#######################################################################################
 
 if __name__ == "__main__":
     import sys
-
     issue = Issues()
-
     app = QtWidgets.QApplication(sys.argv)
     LogOnUI = QtWidgets.QMainWindow()
     ui = Ui_LogOnUI()
     ui.setupUi(LogOnUI)
     LogOnUI.show()
-
     sys.exit(app.exec_())
