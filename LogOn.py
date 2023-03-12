@@ -205,8 +205,8 @@ class Ui_LogOnUI(object):
         self.ui.lineEditEmail.setText("")
         # self.AllOK = False
         self.dblen = len(Subscribers)
-        self.ui.labelSIDNumber.setText(str(self.dblen))
-        self.ui.labelActiveNumber.setText(str(self.totActiveSubs))
+        #self.ui.labelSIDNumber.setText(str(self.dblen))
+        #self.ui.labelActiveNumber.setText(str(self.totActiveSubs))
         self.ui.labelNewSubs.setText(na)
         self.saveSubscribers()
 
