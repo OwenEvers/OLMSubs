@@ -516,6 +516,9 @@ class Ui_LogOnUI(object):
         self.Main_UI.close()
         LogOnUI.show()
 
+
+#########################################################################################
+#               About Window
     def openAbout(self):
         self.About_UI = QtWidgets.QWidget()
         self.ui = Ui_Form()
@@ -525,15 +528,16 @@ class Ui_LogOnUI(object):
         self.aboutInfo()
         self.ui.pushButtonAboutExit.clicked.connect(self.aboutExit)
 
-    def aboutInfo(self):
+    def aboutInfo(self):                # text shown in the About window
         self.ui.textEditAbout.setText(
-            "OLM - LCARS System Software designed EXCLUSIVELY for Chris Evers "
-            "(Outer Limits Magazine by Bro Video - Owen Evers"
+            "OLM - LCARS System Software designed for"
+            "(Outer Limits Magazine by BVSoftware - OPE"
             "\n\n"
-            "Data is in File OLMIssueDates.csv:\n"
+            "Data File OLMIssueDates.csv:\n"
             " data is Issue numbers and dates.\n"
             "\nThere is data in the file to last until Feb 2028\n"
-            "Edit this csv to extend this time"
+            "Edit this csv to extend this time\n"
+            "Subscribers.csv is data. keep same format"
         )
 
     def aboutExit(self):
