@@ -550,6 +550,38 @@ color: rgb(0, 0, 0);</string>
                   </property>
                  </widget>
                 </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_IssueMag">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>130</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-image: url(:/Buttons/Images/BTNIssue.png);</string>
+                  </property>
+                  <property name="text">
+                   <string>                       .</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="MainWin.qrc">
+                    <normaloff>:/Icons/Images/fi-bs-book.svg</normaloff>:/Icons/Images/fi-bs-book.svg</iconset>
+                  </property>
+                  <property name="flat">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
                </layout>
               </widget>
              </item>
@@ -614,6 +646,38 @@ background-color: rgb(153, 193, 241);</string>
                   <property name="icon">
                    <iconset resource="MainWin.qrc">
                     <normaloff>:/Icons/Images/fi-bs-list.svg</normaloff>:/Icons/Images/fi-bs-list.svg</iconset>
+                  </property>
+                  <property name="flat">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_MagDates">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>130</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-image: url(:/Buttons/Images/BTNMagDates.png);</string>
+                  </property>
+                  <property name="text">
+                   <string>                       .</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="MainWin.qrc">
+                    <normaloff>:/Icons/Images/fi-bs-calendar-day.svg</normaloff>:/Icons/Images/fi-bs-calendar-day.svg</iconset>
                   </property>
                   <property name="flat">
                    <bool>true</bool>

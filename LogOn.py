@@ -197,19 +197,24 @@ class Ui_LogOnUI(object):
         na = self.ui.lineEditName.text()
         su = self.ui.spinBoxYears.value()
         fi = self.ui.spinBoxFirstIssue.value()
-        issues = su * 6
-        issues = issues + fi
-        li = str(issues)
-        su = str(su)
+
+        issues = su * 6  # 6 issues a yesr times 6
+        issues = issues + fi  # add on first issue number
+        issues -= 1  # minus 1 to make 6 issues inc fi
+        if su == 0:  # add 1 if 0 years (fi = last issue, li)
+            issues += 1
+
+        li = str(issues)  # last issue
+        su = str(su)  # subscription len, Years
         fi = str(fi)
-        Subscribers.append([em, na, su, fi, li, ""])
-        self.active_Subscribers()
+        Subscribers.append([em, na, su, fi, li, ""])  # add to end of list
+        self.active_Subscribers()                       # update to get [5]
         self.ui.lineEditName.setText("")
         self.ui.lineEditEmail.setText("")
         # self.AllOK = False
         self.dblen = len(Subscribers)
-        #self.ui.labelSIDNumber.setText(str(self.dblen))
-        #self.ui.labelActiveNumber.setText(str(self.totActiveSubs))
+        # self.ui.labelSIDNumber.setText(str(self.dblen))
+        # self.ui.labelActiveNumber.setText(str(self.totActiveSubs))
         self.ui.labelNewSubs.setText(na)
         self.saveSubscribers()
 
@@ -271,6 +276,7 @@ class Ui_LogOnUI(object):
         self.Main_UI = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.Main_UI)
+
         self.ui.pushButton_Lock.clicked.connect(self.lockClicked)
         self.ui.pushButton_CloseApp.clicked.connect(exitClick)
         self.ui.pushButton_AddSubs.clicked.connect(self.addSubs)
@@ -288,6 +294,7 @@ class Ui_LogOnUI(object):
         self.ui.pushButton_Active.clicked.connect(self.listActiveSubs)
         self.ui.pushButton_ListSubs.clicked.connect(self.listSubs)
         self.ui.pushButtonEdit.clicked.connect(self.editButtonClick)
+        self.ui.pushButton_MagDates.clicked.connect(self.magDatesClick)
         self.ui.textEdit.setText(allIssues)
         monthNow = now.month
         month = find_month(monthNow)  # import getMonth.py to return month as string, pass in month a number
@@ -307,6 +314,10 @@ class Ui_LogOnUI(object):
         self.Main_UI.show()
 
         LogOnUI.close()
+
+    def magDatesClick(self):
+        allIssues = getListIssues()
+        self.ui.textEdit.setText(allIssues)
 
     def editButtonClick(self):
         selectedSubs = self.ui.comboBox.currentText()
@@ -447,7 +458,7 @@ class Ui_LogOnUI(object):
         subsActive.clear()  # Clear the lists before adding
         subsLastIssue.clear()
         subsNotActive.clear()
-        for row in Subscribers:
+        for row in Subscribers:                     # update to set [5] to Y N or L
             if row[4] > str(self.nextIssueNumber):
                 row[5] = "Y"
                 self.totActiveSubs += 1  # len(subsActive) ?
@@ -519,9 +530,9 @@ class Ui_LogOnUI(object):
         self.Main_UI.close()
         LogOnUI.show()
 
-#               End Main UI Window
-#########################################################################################
-#               About Window
+    #               End Main UI Window
+    #########################################################################################
+    #               About Window
     def openAbout(self):
         self.About_UI = QtWidgets.QWidget()
         self.ui = Ui_Form()
@@ -531,7 +542,7 @@ class Ui_LogOnUI(object):
         self.aboutInfo()
         self.ui.pushButtonAboutExit.clicked.connect(self.aboutExit)
 
-    def aboutInfo(self):                # text shown in the About window
+    def aboutInfo(self):  # text shown in the About window
         self.ui.textEditAbout.setText(
             "OLM - LCARS System Software designed for"
             "(Outer Limits Magazine by BVSoftware - OPE"
@@ -547,10 +558,10 @@ class Ui_LogOnUI(object):
         self.About_UI.close()
         LogOnUI.show()
 
-#                               End About
-###############################################################################################
-#                               UI setup - LOG ON Window
-#                               pushbutton.connects set below
+    #                               End About
+    ###############################################################################################
+    #                               UI setup - LOG ON Window
+    #                               pushbutton.connects set below
     def setupUi(self, LogOnUI):
         LogOnUI.setObjectName("LogOnUI")
         LogOnUI.resize(1000, 629)
@@ -660,6 +671,7 @@ class Ui_LogOnUI(object):
         self.pushButton_Exit.setToolTip(_translate("LogOnUI", "Exit - Quit"))
         self.pushButton_About.setToolTip(_translate("LogOnUI", "About OLM-LCARS"))
 
+
 #                           End Logon UI
 #########################################################################################
 #                           Magazine ISSUE - Get details
@@ -722,6 +734,7 @@ class Issues(object):
         month = find_month(int(self.nextmonth))
         return month
 
+
 #
 ############################################################################################
 #                           Lists
@@ -744,17 +757,18 @@ for row in readList:
     # issueDate.append(row[3])
 S = open('Subscribers.csv', 'r')
 readList = csv.reader(S)
-header = next(readList)
+# header = next(readList)
 num = 0
 for row in readList:
     Subscribers.append(row)
     num = num + 1
-db = num                    # num replaced by len() insure is num still used?
+db = num  # num replaced by len() insure is num still used?
 
 #######################################################################################
 
 if __name__ == "__main__":
     import sys
+
     issue = Issues()
     app = QtWidgets.QApplication(sys.argv)
     LogOnUI = QtWidgets.QMainWindow()

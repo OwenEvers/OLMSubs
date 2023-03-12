@@ -10,6 +10,10 @@
     <file>Images/MWinBottom.png</file>
   </qresource>
   <qresource prefix="Icons">
+    <file>Images/fi-bs-calendar-day.svg</file>
+    <file>Images/fi-bs-book-arrow-up.svg</file>
+    <file>Images/fi-bs-book-alt.svg</file>
+    <file>Images/fi-bs-book.svg</file>
     <file>Images/fi-bs-search.svg</file>
     <file>Images/fi-bs-delete-user.svg</file>
     <file>Images/fi-bs-list.svg</file>
@@ -19,6 +23,8 @@
     <file>Images/fi-bs-lock.svg</file>
   </qresource>
   <qresource prefix="Buttons">
+    <file>Images/BTNMagDates.png</file>
+    <file>Images/BTNIssue.png</file>
     <file>Images/LogInBTN.png</file>
     <file>Images/ExitBTN.png</file>
     <file>Images/AboutBTN.png</file>

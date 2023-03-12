@@ -668,10 +668,13 @@ color: rgb(0, 0, 0);</string>
                    <string> Year(s)</string>
                   </property>
                   <property name="minimum">
-                   <number>1</number>
+                   <number>0</number>
                   </property>
                   <property name="maximum">
                    <number>3</number>
+                  </property>
+                  <property name="value">
+                   <number>0</number>
                   </property>
                  </widget>
                 </item>
