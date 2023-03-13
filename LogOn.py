@@ -211,7 +211,7 @@ class Ui_LogOnUI(object):
         su = str(su)  # subscription len, Years
         fi = str(fi)
         Subscribers.append([em, na, su, fi, li, ""])  # add to end of list
-        self.active_Subscribers()                       # update to get [5]
+        self.active_Subscribers()  # update to get [5]
         self.ui.lineEditName.setText("")
         self.ui.lineEditEmail.setText("")
         # self.AllOK = False
@@ -283,7 +283,7 @@ class Ui_LogOnUI(object):
         self.ui.pushButton_Lock.clicked.connect(self.lockClicked)
         self.ui.pushButton_CloseApp.clicked.connect(exitClick)
         self.ui.pushButton_AddSubs.clicked.connect(self.addSubs)
-        #self.ui.pushButton_MagDates.clicked.connect(self.issueMagazine)
+        # self.ui.pushButton_MagDates.clicked.connect(self.issueMagazine)
         self.ui.pushButton_IssueMag.clicked.connect(self.issueMagazine)
         self.nextIssueNumber = (issue.next_Issue(self.nextIssueNumber))  # get from def issue
         self.ui.label_NextIssueNum.setText(str(self.nextIssueNumber))
@@ -320,13 +320,11 @@ class Ui_LogOnUI(object):
 
         LogOnUI.close()
 
-
     def issueMagazine(self):
-        print("issue Magazine")
+        # print("issue Magazine")
         self.stop()
         self.Main_UI.close()
         self.issue_Magazine_window()
-
 
     def magDatesClick(self):
         allIssues = getListIssues()
@@ -343,13 +341,13 @@ class Ui_LogOnUI(object):
                     thisSubsEmail = rownum[0]
                     self.editSubscriber(rownum)
 
-#
-#####################################################################################################
-#               Issue Magazine
+    #
+    #####################################################################################################
+    #               Issue Magazine
 
     def issue_Magazine_window(self):
         nid = getNextIssueDate()
-        print(nid)
+        # print(nid)
         self.IssueMagWindow = QtWidgets.QMainWindow()
         self.ui = Ui_IssueMagWindow()
         self.ui.setupUi(self.IssueMagWindow)
@@ -359,10 +357,13 @@ class Ui_LogOnUI(object):
         self.ui.pushButton_AddSubs.clicked.connect(self.backtoAddSubs)
         self.ui.pushButton_MagDates.clicked.connect(self.magDatesClick)
         self.ui.pushButton_ListSubs.clicked.connect(self.backtoMW)
-        self.IssueMagWindow.show()
+        self.ui.label_IssueMonthTitle.setText(str(self.nextPubDate))
         # populate combo with issue numbers
+        comboIndex = self.nextIssueNumber
+        comboIndex -= 1
         self.populateComboIssues()
-
+        self.ui.comboBox.setCurrentIndex(comboIndex)
+        self.IssueMagWindow.show()
 
     def populateComboIssues(self):  # combobox = Issue Numbers
         self.ui.comboBox.clear()
@@ -506,7 +507,7 @@ class Ui_LogOnUI(object):
         subsActive.clear()  # Clear the lists before adding
         subsLastIssue.clear()
         subsNotActive.clear()
-        for row in Subscribers:                     # update to set [5] to Y N or L
+        for row in Subscribers:  # update to set [5] to Y N or L
             if row[4] > str(self.nextIssueNumber):
                 row[5] = "Y"
                 self.totActiveSubs += 1  # len(subsActive) ?

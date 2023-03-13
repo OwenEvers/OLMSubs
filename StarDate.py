@@ -1,5 +1,5 @@
 ## Simply returns st (YYMMDD.hhmmss)
-# st = str(year) + str(month) + str(day) + "." + str(hour) + str(minute) + str(secs)
+# nid / st = str(year) + str(month) + str(day) + "." + str(hour) + str(minute) + str(secs)
 
 from datetime import datetime
 
