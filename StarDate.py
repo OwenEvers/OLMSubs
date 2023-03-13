@@ -3,6 +3,20 @@
 
 from datetime import datetime
 
+def getNextIssueDate():
+    now = datetime.now()
+    year = now.year
+    month = now.month
+    if month % 2 == 0:
+        month += 2
+    else:
+        month += 1
+    year = str(year)
+    year = year[2:]
+    if month < 10:
+        month = "0" + str(month)
+    nid = str(year) + str(month) + "01" + "." + "00" + "00" + "01"
+    return nid
 
 def getStarDate():
     now = datetime.now()

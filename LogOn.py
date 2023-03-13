@@ -8,8 +8,9 @@ from MainWin3 import Ui_MainWindow
 from About import Ui_Form
 from AddSubs import Ui_AddNewWindow
 from EditSubs import Ui_EditSubsWindow
+from IssueMag import Ui_IssueMagWindow
 from getMonth import find_month, find_Month_Num
-from StarDate import getStarDate
+from StarDate import getStarDate, getNextIssueDate
 import csv
 import datetime
 import re
@@ -131,6 +132,7 @@ def validEmail(input_email):
 class Ui_LogOnUI(object):
 
     def __init__(self):
+        self.IssueMagWindow = None
         self.AllOK = None
         self.okToDelete = None
         self.editing = None
@@ -152,6 +154,7 @@ class Ui_LogOnUI(object):
 
     def addSubs(self):
         self.Main_UI.close()
+
         self.stop()
         self.AddNewSubs = QtWidgets.QMainWindow()
         self.ui = Ui_AddNewWindow()
@@ -280,6 +283,8 @@ class Ui_LogOnUI(object):
         self.ui.pushButton_Lock.clicked.connect(self.lockClicked)
         self.ui.pushButton_CloseApp.clicked.connect(exitClick)
         self.ui.pushButton_AddSubs.clicked.connect(self.addSubs)
+        #self.ui.pushButton_MagDates.clicked.connect(self.issueMagazine)
+        self.ui.pushButton_IssueMag.clicked.connect(self.issueMagazine)
         self.nextIssueNumber = (issue.next_Issue(self.nextIssueNumber))  # get from def issue
         self.ui.label_NextIssueNum.setText(str(self.nextIssueNumber))
         now = datetime.datetime.now()
@@ -315,6 +320,14 @@ class Ui_LogOnUI(object):
 
         LogOnUI.close()
 
+
+    def issueMagazine(self):
+        print("issue Magazine")
+        self.stop()
+        self.Main_UI.close()
+        self.issue_Magazine_window()
+
+
     def magDatesClick(self):
         allIssues = getListIssues()
         self.ui.textEdit.setText(allIssues)
@@ -329,6 +342,41 @@ class Ui_LogOnUI(object):
                 if selectedSubs == rownum[1]:
                     thisSubsEmail = rownum[0]
                     self.editSubscriber(rownum)
+
+#
+#####################################################################################################
+#               Issue Magazine
+
+    def issue_Magazine_window(self):
+        nid = getNextIssueDate()
+        print(nid)
+        self.IssueMagWindow = QtWidgets.QMainWindow()
+        self.ui = Ui_IssueMagWindow()
+        self.ui.setupUi(self.IssueMagWindow)
+        self.ui.lcdNumber.setProperty("value", nid)
+        self.ui.pushButton_Lock.clicked.connect(self.lockClicked)
+        self.ui.pushButton_CloseApp.clicked.connect(exitClick)
+        self.ui.pushButton_AddSubs.clicked.connect(self.backtoAddSubs)
+        self.ui.pushButton_MagDates.clicked.connect(self.magDatesClick)
+        self.ui.pushButton_ListSubs.clicked.connect(self.backtoMW)
+        self.IssueMagWindow.show()
+        # populate combo with issue numbers
+        self.populateComboIssues()
+
+
+    def populateComboIssues(self):  # combobox = Issue Numbers
+        self.ui.comboBox.clear()
+        for row in issuesList:
+            self.ui.comboBox.addItem(row[0])
+
+    def backtoMW(self):
+        self.IssueMagWindow.close()
+        self.openMW()
+        self.listSubs()
+
+    def backtoAddSubs(self):
+        self.IssueMagWindow.close()
+        self.addSubs()
 
     # ##########################################################################################################
     #         EDIT SUBS UI

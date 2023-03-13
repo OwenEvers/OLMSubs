@@ -7,3 +7,5 @@ If you use this code replace with your own data,
 Keeping the same file structure.
 
 start with LogOn.py - Python 3.11 - UI = PyQt5
+
+Version 1: Not fully functional. debugging. Still in design Stage
