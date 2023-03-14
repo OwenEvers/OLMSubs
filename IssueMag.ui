@@ -1255,6 +1255,21 @@ background-color: rgb(255, 153, 102);</string>
                </property>
               </widget>
              </item>
+             <item>
+              <widget class="QRadioButton" name="radioButtonNone">
+               <property name="font">
+                <font>
+                 <family>System-ui</family>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>NONE</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -1362,6 +1377,18 @@ background-color: rgb(154, 153, 150);</string>
        </item>
        <item>
         <widget class="QFrame" name="frameBotRight">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>190</width>
+           <height>16777215</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -1460,7 +1487,10 @@ background-color: rgb(154, 153, 150);</string>
                 <string notr="true">color: rgb(255, 153, 0);</string>
                </property>
                <property name="text">
-                <string>DATA NODE 001</string>
+                <string>Issue</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>

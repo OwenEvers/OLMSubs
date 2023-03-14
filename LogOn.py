@@ -1,5 +1,5 @@
 # This is the py to run first
-
+#
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QTimer
@@ -132,6 +132,8 @@ def validEmail(input_email):
 class Ui_LogOnUI(object):
 
     def __init__(self):
+        self.timer = None
+        self.rbtimer = None
         self.IssueMagWindow = None
         self.AllOK = None
         self.okToDelete = None
@@ -347,7 +349,11 @@ class Ui_LogOnUI(object):
 
     def issue_Magazine_window(self):
         nid = getNextIssueDate()
-        # print(nid)
+        self.rbtimer = QTimer()
+        self.rbtimer.setInterval(1000)
+        self.rbtimer.start()
+        self.rbtimer.timeout.connect(self.checkrbtimer)
+
         self.IssueMagWindow = QtWidgets.QMainWindow()
         self.ui = Ui_IssueMagWindow()
         self.ui.setupUi(self.IssueMagWindow)
@@ -355,7 +361,7 @@ class Ui_LogOnUI(object):
         self.ui.pushButton_Lock.clicked.connect(self.lockClicked)
         self.ui.pushButton_CloseApp.clicked.connect(exitClick)
         self.ui.pushButton_AddSubs.clicked.connect(self.backtoAddSubs)
-        self.ui.pushButton_MagDates.clicked.connect(self.magDatesClick)
+        self.ui.pushButton_MagDates.clicked.connect(self.magDates) #   need to stop rdtimer
         self.ui.pushButton_ListSubs.clicked.connect(self.backtoMW)
         self.ui.label_IssueMonthTitle.setText(str(self.nextPubDate))
         # populate combo with issue numbers
@@ -363,7 +369,33 @@ class Ui_LogOnUI(object):
         comboIndex -= 1
         self.populateComboIssues()
         self.ui.comboBox.setCurrentIndex(comboIndex)
+
         self.IssueMagWindow.show()
+
+    def magDates(self):
+        #self.rbtimer.stop()
+        self.ui.radioButtonNone.setChecked(True)
+        self.magDatesClick()
+
+    def checkrbtimer(self):  # see if or which radio button selected
+        line = "Sending This Issue To\n\n"
+        if self.ui.radioButtonAll.isChecked():
+            linesubs = getListActiveSubscribers()
+            line = line + linesubs
+            self.ui.textEdit.setText(line)
+        if self.ui.radioButtonLast.isChecked():
+            linesubs = getListLISubscribers()
+            line = line + linesubs
+            self.ui.textEdit.setText(line)
+        if self.ui.radioButtonNot.isChecked():
+            linesubs = getListNASubscribers()
+            line = line + linesubs
+            self.ui.textEdit.setText(line)
+        if self.ui.radioButtonEveryone.isChecked():
+            linesubs = getListSubscribers()
+            line = line + linesubs
+            self.ui.textEdit.setText(line)
+
 
     def populateComboIssues(self):  # combobox = Issue Numbers
         self.ui.comboBox.clear()
@@ -371,6 +403,7 @@ class Ui_LogOnUI(object):
             self.ui.comboBox.addItem(row[0])
 
     def backtoMW(self):
+        self.rbtimer.stop()
         self.IssueMagWindow.close()
         self.openMW()
         self.listSubs()
