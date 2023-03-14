@@ -23,6 +23,7 @@
     <file>Images/fi-bs-lock.svg</file>
   </qresource>
   <qresource prefix="Buttons">
+    <file>Images/BTNFindIssue.png</file>
     <file>Images/BTNSendEmail.png</file>
     <file>Images/BTNMagDates.png</file>
     <file>Images/BTNIssue.png</file>
