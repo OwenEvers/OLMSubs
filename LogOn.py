@@ -371,7 +371,6 @@ class Ui_LogOnUI(object):
         # populate combo with issue numbers
         self.populateComboIssues()
 
-
         self.IssueMagWindow.show()
 
     def find_Issue(self):
@@ -410,14 +409,15 @@ class Ui_LogOnUI(object):
             self.ui.comboBox.addItem(row[0])
         comboIndex = self.nextIssueNumber
         lastIssue = comboIndex - 1
-        self.ui.comboBox.setCurrentIndex(lastIssue-1)
+        self.ui.comboBox.setCurrentIndex(lastIssue - 1)
 
         data = get_Metadata(lastIssue)
         p1text = extract_pg1_text(lastIssue)
-        info = f"Last Issue was {str(lastIssue)} Created on {str(data.creation_date)}\n" \
-                f"By {str(data.author)}\n" \
-                f"Using {str(data.creator)}\n" \
-                f"\n SNIPPET FROM FRONT COVER \n\n{p1text}"
+        info = f"Last Issue was {str(lastIssue)}\n " \
+               f"Found Issue created on {str(data.creation_date)}\n" \
+               f"By {str(data.author)}\n" \
+               f"Using {str(data.creator)}\n" \
+               f"\n SNIPPET FROM FRONT COVER \n\n{p1text}"
 
         self.ui.textEdit.setText(info)
 
