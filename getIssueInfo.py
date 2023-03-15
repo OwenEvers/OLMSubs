@@ -51,6 +51,6 @@ def extract_pg1_text(pdf_file):                     # pass in the pdf file
             textpg1 = pdf_reader.pages[0].extract_text()  # text on page 1 has error to return
     return textpg1
 
-#pdf_file = '53'                                # test Number only .pdf
+#pdf_file = '42'                                # test Number only .pdf
 #get_Metadata(pdf_file)                                  # call
 #extract_pg1_text(pdf_file)                              # call
