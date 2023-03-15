@@ -363,6 +363,8 @@ class Ui_LogOnUI(object):
         self.ui.pushButton_AddSubs.clicked.connect(self.backtoAddSubs)
         self.ui.pushButton_MagDates.clicked.connect(self.magDates) #   need to stop rdtimer
         self.ui.pushButton_ListSubs.clicked.connect(self.backtoMW)
+        self.ui.pushButtonFindIssue.clicked.connect(self.find_Issue)
+        self.ui.pushButtonSendNow.clicked.connect(self.send_Now)
         self.ui.label_IssueMonthTitle.setText(str(self.nextPubDate))
         # populate combo with issue numbers
         comboIndex = self.nextIssueNumber
@@ -372,6 +374,12 @@ class Ui_LogOnUI(object):
 
         self.IssueMagWindow.show()
 
+
+    def find_Issue(self):
+        pass
+
+    def send_Now(self):
+        pass
     def magDates(self):
         #self.rbtimer.stop()
         self.ui.radioButtonNone.setChecked(True)
