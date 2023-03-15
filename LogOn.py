@@ -11,6 +11,7 @@ from EditSubs import Ui_EditSubsWindow
 from IssueMag import Ui_IssueMagWindow
 from getMonth import find_month, find_Month_Num
 from StarDate import getStarDate, getNextIssueDate
+from getIssueInfo import get_Metadata, extract_pg1_text
 import csv
 import datetime
 import re
@@ -154,7 +155,7 @@ class Ui_LogOnUI(object):
         self.AddNewSubs.close()
         self.start()
 
-    def addSubs(self):
+    def addSubs(self):  # Add new subscriber window
         self.Main_UI.close()
 
         self.stop()
@@ -197,7 +198,7 @@ class Ui_LogOnUI(object):
         if self.AllOK:
             self.add_This_Subscriber()
 
-    def add_This_Subscriber(self):
+    def add_This_Subscriber(self):  # Add New subscriber to list
         em = self.ui.lineEditEmail.text()
         na = self.ui.lineEditName.text()
         su = self.ui.spinBoxYears.value()
@@ -224,7 +225,6 @@ class Ui_LogOnUI(object):
         self.saveSubscribers()
 
     def saveSubscribers(self):
-        # Subscribers.insert(0, header)       # Re apply the Header to the List
         with open('Subscribers.csv', 'w', newline='') as sS:
             writer = csv.writer(sS)
             writer.writerows(Subscribers)
@@ -258,7 +258,7 @@ class Ui_LogOnUI(object):
         msg.setIcon(QMessageBox.Critical)
         x = msg.exec_()
 
-    def doit(self):  # Time loop called every second
+    def doit(self):  # Time loop called every second on Main window
         sd = Set_Stardate()
         starDate = sd
         pbNum = self.getPBNum()
@@ -322,7 +322,7 @@ class Ui_LogOnUI(object):
 
         LogOnUI.close()
 
-    def issueMagazine(self):
+    def issueMagazine(self):  # open issue window
         # print("issue Magazine")
         self.stop()
         self.Main_UI.close()
@@ -348,40 +348,40 @@ class Ui_LogOnUI(object):
     #               Issue Magazine
 
     def issue_Magazine_window(self):
-        nid = getNextIssueDate()
-        self.rbtimer = QTimer()
+        nid = getNextIssueDate()  # get nid
+        self.rbtimer = QTimer()  # timer checks if radiobutton checked
         self.rbtimer.setInterval(1000)
         self.rbtimer.start()
         self.rbtimer.timeout.connect(self.checkrbtimer)
 
-        self.IssueMagWindow = QtWidgets.QMainWindow()
+        self.IssueMagWindow = QtWidgets.QMainWindow()  # setup ui
         self.ui = Ui_IssueMagWindow()
         self.ui.setupUi(self.IssueMagWindow)
-        self.ui.lcdNumber.setProperty("value", nid)
-        self.ui.pushButton_Lock.clicked.connect(self.lockClicked)
+        self.ui.lcdNumber.setProperty("value", nid)  # next issue date
+        self.ui.pushButton_Lock.clicked.connect(self.lockClicked)  # Buttons
         self.ui.pushButton_CloseApp.clicked.connect(exitClick)
         self.ui.pushButton_AddSubs.clicked.connect(self.backtoAddSubs)
-        self.ui.pushButton_MagDates.clicked.connect(self.magDates) #   need to stop rdtimer
+        self.ui.pushButton_MagDates.clicked.connect(self.magDates)  # need to stop rdtimer
         self.ui.pushButton_ListSubs.clicked.connect(self.backtoMW)
         self.ui.pushButtonFindIssue.clicked.connect(self.find_Issue)
         self.ui.pushButtonSendNow.clicked.connect(self.send_Now)
+        # set label with next publish date
         self.ui.label_IssueMonthTitle.setText(str(self.nextPubDate))
+
         # populate combo with issue numbers
-        comboIndex = self.nextIssueNumber
-        comboIndex -= 1
         self.populateComboIssues()
-        self.ui.comboBox.setCurrentIndex(comboIndex)
+
 
         self.IssueMagWindow.show()
-
 
     def find_Issue(self):
         pass
 
     def send_Now(self):
         pass
+
     def magDates(self):
-        #self.rbtimer.stop()
+        # self.rbtimer.stop()
         self.ui.radioButtonNone.setChecked(True)
         self.magDatesClick()
 
@@ -404,11 +404,22 @@ class Ui_LogOnUI(object):
             line = line + linesubs
             self.ui.textEdit.setText(line)
 
-
     def populateComboIssues(self):  # combobox = Issue Numbers
         self.ui.comboBox.clear()
         for row in issuesList:
             self.ui.comboBox.addItem(row[0])
+        comboIndex = self.nextIssueNumber
+        lastIssue = comboIndex - 1
+        self.ui.comboBox.setCurrentIndex(lastIssue-1)
+
+        data = get_Metadata(lastIssue)
+        p1text = extract_pg1_text(lastIssue)
+        info = f"Last Issue was {str(lastIssue)} Created on {str(data.creation_date)}\n" \
+                f"By {str(data.author)}\n" \
+                f"Using {str(data.creator)}\n" \
+                f"\n SNIPPET FROM FRONT COVER \n\n{p1text}"
+
+        self.ui.textEdit.setText(info)
 
     def backtoMW(self):
         self.rbtimer.stop()
