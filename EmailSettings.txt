@@ -1,2 +1,2 @@
 emailaddress
-apppassword
+googleAppPassword
