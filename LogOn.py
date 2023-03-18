@@ -1,9 +1,10 @@
 # This is the py to run first
 #
-
+import os
+import shutil
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QMessageBox, QFileDialog
 from MainWin3 import Ui_MainWindow
 from About import Ui_Form
 from AddSubs import Ui_AddNewWindow
@@ -15,7 +16,7 @@ from getIssueInfo import get_Metadata, extract_pg1_text
 import csv
 import datetime
 import re
-import About_rc  # DO NOT DELETE THESE ARE USED
+import About_rc  # DO NOT DELETE THESE ARE USED: Images
 import Images_rc  # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -149,6 +150,8 @@ class Ui_LogOnUI(object):
         self.Main_UI = None
         self.totActiveSubs = 0
         self.dblen = 0
+        self.mwd = os.getcwd()
+        self.magsDir = self.mwd + '/Mags'
 
     def closeaddSubs(self):
         self.openMW()
@@ -358,7 +361,7 @@ class Ui_LogOnUI(object):
         self.ui = Ui_IssueMagWindow()
         self.ui.setupUi(self.IssueMagWindow)
         self.ui.lcdNumber.setProperty("value", nid)  # next issue date
-        self.ui.pushButton_Lock.clicked.connect(self.lockClicked)  # Buttons
+        self.ui.pushButton_Lock.clicked.connect(self.issueWinLock)  # Buttons
         self.ui.pushButton_CloseApp.clicked.connect(exitClick)
         self.ui.pushButton_AddSubs.clicked.connect(self.backtoAddSubs)
         self.ui.pushButton_MagDates.clicked.connect(self.magDates)  # need to stop rdtimer
@@ -366,15 +369,95 @@ class Ui_LogOnUI(object):
         self.ui.pushButtonFindIssue.clicked.connect(self.find_Issue)
         self.ui.pushButtonSendNow.clicked.connect(self.send_Now)
         # set label with next publish date
-        self.ui.label_IssueMonthTitle.setText(str(self.nextPubDate))
-
+        self.ui.label_IssueMonthTitle.setText(str(self.nextPubDate) + ' Issue ' + str(self.nextIssueNumber))
+        self.getMagsDirFiles()
         # populate combo with issue numbers
         self.populateComboIssues()
-
+        self.ui.comboBox.currentIndexChanged.connect(self.issueSelected)
+        self.checkFileNames()                       # make sre file names are just the issue number
         self.IssueMagWindow.show()
 
-    def find_Issue(self):
-        pass
+    def issueSelected(self):
+        selected = self.ui.comboBox.currentText()
+        # print(f" index change to {selected}")
+        self.getMagsDirFiles()
+        self.updateIssueUI(selected)
+
+    def updateIssueUI(self, selected):
+        data = get_Metadata(selected)  # from import getIsuesInfo, pass in number
+        if data.author == "Bro Video Software":
+            self.ui.label_SelectedIssue.setText("Not Found")
+        else:
+            self.ui.label_SelectedIssue.setText(f"{str(selected)}.pdf")
+        p1text = extract_pg1_text(selected)
+        info = f"You have selected Issue {str(selected)}\n " \
+               f"Found Issue created on {str(data.creation_date)}\n" \
+               f"By {str(data.author)}\n" \
+               f"Using {str(data.creator)}\n" \
+               f"\n SNIPPET From Issue \n\n{p1text}"
+
+        self.ui.textEdit.setText(info)
+
+    def getMagsDirFiles(self):
+        issuesInMagsDir.clear()  # clear list
+        for roots, dirs, files in os.walk(self.magsDir):  # only interested in files
+            for file in files:  # loop and add
+                issuesInMagsDir.append(file)  # Add found to list
+                # print(f"Files = {file}")                   # print is for test only
+        availNumIssues = str(len(issuesInMagsDir))  # how many found
+        self.ui.label_issuesAvail.setText(availNumIssues)  # show num in ui
+
+    def issueWinLock(self):
+        self.rbtimer.stop()
+        self.IssueMagWindow.close()
+        self.lockClicked()
+
+    def find_Issue(self):  # Open file explorer, for pdf
+        fname = QFileDialog.getOpenFileName(None, "Locate Issue to Add", "", "pdf (*.pdf)")
+        fname = fname[0]
+        if fname:
+            try:
+                shutil.copy(fname, self.magsDir)
+                #shutil.move(fname, self.magsDir)
+            except Exception as e:
+                msg = QMessageBox()
+                msg.setWindowTitle("Error...")
+                msg.setText(f"Could not do that because:\n\n"
+                            f"{e}\n"
+                            "PDF NOT Added to the Mags Folder\n"
+                            f"{self.magsDir}")
+                msg.setIcon(QMessageBox.Critical)
+                x = msg.exec_()
+
+            else:
+                self.checkFileNames()
+                msg = QMessageBox()
+                msg.setWindowTitle("Added Issue to Mags Folder")
+                msg.setText(f"Issue Added:\n\n"
+                            f"{fname}\n"
+                            "Has Been Added to the Mags Folder\n"
+                            f"{self.magsDir}")
+                msg.setIcon(QMessageBox.Critical)
+                x = msg.exec_()
+                self.getMagsDirFiles()                  # count number of issues in Mags dir
+
+    def checkFileNames(self):
+        fileList = os.listdir(self.magsDir)
+        for file in fileList:
+            if len(file) != 6:
+                startLen = len(file)
+                newLen = startLen - 6
+                reName = file[newLen:]
+                msg = QMessageBox()
+                msg.setWindowTitle("Re Naming File")
+                msg.setText(f"Issue Added:\n\n"
+                            f"{file}\n"
+                            "Has Been Re Named to\n"
+                            f"{reName}")
+                msg.setIcon(QMessageBox.Information)
+                x = msg.exec_()
+                os.rename(self.magsDir + f"/{file}", self.magsDir + f"/{reName}")  # also need to check new name is number
+
 
     def send_Now(self):
         pass
@@ -390,18 +473,27 @@ class Ui_LogOnUI(object):
             linesubs = getListActiveSubscribers()
             line = line + linesubs
             self.ui.textEdit.setText(line)
+            self.ui.label_SelectedSubs.setText("All Active")
         if self.ui.radioButtonLast.isChecked():
             linesubs = getListLISubscribers()
             line = line + linesubs
             self.ui.textEdit.setText(line)
+            self.ui.label_SelectedSubs.setText("Last Issue")
         if self.ui.radioButtonNot.isChecked():
             linesubs = getListNASubscribers()
             line = line + linesubs
             self.ui.textEdit.setText(line)
+            self.ui.label_SelectedSubs.setText("NOT Active")
         if self.ui.radioButtonEveryone.isChecked():
             linesubs = getListSubscribers()
             line = line + linesubs
             self.ui.textEdit.setText(line)
+            self.ui.label_SelectedSubs.setText("All in DB")
+        if self.ui.radioButtonNone.isChecked():
+            line = "Select who to send to"
+            self.ui.textEdit.setText(line)
+            self.ui.label_SelectedSubs.setText("NONE")
+            self.populateComboIssues()
 
     def populateComboIssues(self):  # combobox = Issue Numbers
         self.ui.comboBox.clear()
@@ -411,13 +503,13 @@ class Ui_LogOnUI(object):
         lastIssue = comboIndex - 1
         self.ui.comboBox.setCurrentIndex(lastIssue - 1)
 
-        data = get_Metadata(lastIssue)
+        data = get_Metadata(lastIssue)  # from import getIsuesInfo, passin number
         p1text = extract_pg1_text(lastIssue)
         info = f"Last Issue was {str(lastIssue)}\n " \
                f"Found Issue created on {str(data.creation_date)}\n" \
                f"By {str(data.author)}\n" \
                f"Using {str(data.creator)}\n" \
-               f"\n SNIPPET FROM FRONT COVER \n\n{p1text}"
+               f"\n SNIPPET FROM LAST ISSUE \n\n{p1text}"
 
         self.ui.textEdit.setText(info)
 
@@ -628,6 +720,7 @@ class Ui_LogOnUI(object):
             self.ui.comboBox.addItem(row[1])
 
     def lockClicked(self):
+
         self.Main_UI.close()
         LogOnUI.show()
 
@@ -839,6 +932,7 @@ class Issues(object):
 #
 ############################################################################################
 #                           Lists
+issuesInMagsDir = []  # issues in the Mags Dir
 issueMonth = []  # needed
 issueYear = []  # needed
 issueDate = []  # holds YEARS only

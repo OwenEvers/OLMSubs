@@ -685,6 +685,9 @@ background-color: rgb(153, 193, 241);</string>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
+                  <property name="toolTip">
+                   <string>All Magazine Dates</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">background-image: url(:/Buttons/Images/BTNMagDates.png);</string>
                   </property>
@@ -744,7 +747,7 @@ background-color: rgb(153, 193, 241);</string>
                    <string notr="true">color: rgb(0, 0, 0);</string>
                   </property>
                   <property name="text">
-                   <string>Select</string>
+                   <string>Select an Issue</string>
                   </property>
                  </widget>
                 </item>
@@ -765,7 +768,7 @@ background-color: rgb(153, 193, 241);</string>
                   <property name="font">
                    <font>
                     <family>System-ui</family>
-                    <pointsize>11</pointsize>
+                    <pointsize>25</pointsize>
                     <weight>50</weight>
                     <bold>false</bold>
                    </font>
@@ -781,45 +784,7 @@ selection-background-color: rgb(255, 153, 0);</string>
                    <string/>
                   </property>
                   <property name="placeholderText">
-                   <string>ISSUE NUMBER</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="pushButtonEdit">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>90</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="font">
-                   <font>
-                    <family>System-ui</family>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 153, 0);</string>
-                  </property>
-                  <property name="text">
                    <string>ISSUE</string>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="MainWin.qrc">
-                    <normaloff>:/Icons/Images/fi-bs-search.svg</normaloff>:/Icons/Images/fi-bs-search.svg</iconset>
                   </property>
                  </widget>
                 </item>
@@ -951,32 +916,66 @@ background-image: url(:/BGs/Images/Transparent.png);</string>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButtonSendNow">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <widget class="QFrame" name="frame_6">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="minimumSize">
-             <size>
-              <width>132</width>
-              <height>40</height>
-             </size>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
             </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-image: url(:/Buttons/Images/BTNSendEmail.png);</string>
-            </property>
-            <property name="text">
-             <string>                       .</string>
-            </property>
-            <property name="icon">
-             <iconset resource="MainWin.qrc">
-              <normaloff>:/Icons/Images/fi-bs-book-arrow-up.svg</normaloff>:/Icons/Images/fi-bs-book-arrow-up.svg</iconset>
-            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="font">
+                <font>
+                 <family>System-ui</family>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 153, 0);</string>
+               </property>
+               <property name="text">
+                <string>Issues Available</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_issuesAvail">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>System-ui</family>
+                 <pointsize>20</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 153, 0);</string>
+               </property>
+               <property name="text">
+                <string>999</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -1453,7 +1452,7 @@ background-color: rgb(154, 153, 150);</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QFrame" name="frameOLMLogo">
+           <widget class="QFrame" name="frameIssue">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
@@ -1462,10 +1461,39 @@ background-color: rgb(154, 153, 150);</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <item>
-              <widget class="QLabel" name="label_DataNode">
+              <widget class="QPushButton" name="pushButtonSendNow">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>132</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-image: url(:/Buttons/Images/BTNSendEmail.png);</string>
+               </property>
+               <property name="text">
+                <string>                       .</string>
+               </property>
+               <property name="icon">
+                <iconset resource="MainWin.qrc">
+                 <normaloff>:/Icons/Images/fi-bs-book-arrow-up.svg</normaloff>:/Icons/Images/fi-bs-book-arrow-up.svg</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_issuing">
                <property name="font">
                 <font>
-                 <family>DejaVu Sans</family>
+                 <family>System-ui</family>
                  <pointsize>25</pointsize>
                  <weight>75</weight>
                  <bold>true</bold>
@@ -1475,7 +1503,7 @@ background-color: rgb(154, 153, 150);</string>
                 <string notr="true">color: rgb(255, 153, 0);</string>
                </property>
                <property name="text">
-                <string>Issue</string>
+                <string>Issueing</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -1483,28 +1511,59 @@ background-color: rgb(154, 153, 150);</string>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="label_OLMLogo">
+              <widget class="QLabel" name="label_SelectedIssue">
+               <property name="font">
+                <font>
+                 <family>System-ui</family>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
                <property name="styleSheet">
-                <string notr="true">color: rgb(153, 153, 255);
-background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::Box</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
-               </property>
-               <property name="lineWidth">
-                <number>3</number>
+                <string notr="true">color: rgb(153, 153, 255);</string>
                </property>
                <property name="text">
-                <string/>
+                <string>TextLabel</string>
                </property>
-               <property name="pixmap">
-                <pixmap resource="MainWin.qrc">:/Icons/Images/fi-bs-book-alt.svg</pixmap>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_SelectedTo">
+               <property name="font">
+                <font>
+                 <family>System-ui</family>
+                 <pointsize>25</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
                </property>
-               <property name="scaledContents">
-                <bool>true</bool>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 153, 0);</string>
+               </property>
+               <property name="text">
+                <string>To</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_SelectedSubs">
+               <property name="font">
+                <font>
+                 <family>System-ui</family>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(153, 153, 255);</string>
+               </property>
+               <property name="text">
+                <string>TextLabel</string>
                </property>
               </widget>
              </item>
@@ -1513,6 +1572,18 @@ background-color: rgb(255, 255, 255);</string>
           </item>
           <item>
            <widget class="QFrame" name="frameDataNode">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>42</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(0, 0, 0);</string>
             </property>
@@ -1525,6 +1596,17 @@ background-color: rgb(255, 255, 255);</string>
             <layout class="QVBoxLayout" name="verticalLayout_11">
              <item>
               <widget class="QLabel" name="label_3">
+               <property name="font">
+                <font>
+                 <family>System-ui</family>
+                 <pointsize>12</pointsize>
+                 <weight>75</weight>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
                 <string notr="true">color: rgb(153, 153, 255);</string>
                </property>

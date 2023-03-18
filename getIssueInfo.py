@@ -4,7 +4,7 @@
 import PyPDF2
 
 
-def get_Metadata(pdf_file):                     # pass in the pdf file
+def get_Metadata(pdf_file):                     # pass in the pdf file NUMBER
 
     direct = "Mags/"
     num = str(pdf_file)
@@ -42,7 +42,7 @@ def extract_pg1_text(pdf_file):                     # pass in the pdf file
     try:
         with open(pdf, 'rb') as pdf_file:
             pdf_reader = PyPDF2.PdfReader(pdf_file)
-            textpg1 = pdf_reader.pages[0].extract_text()  # text on page 1 to return
+            textpg1 = pdf_reader.pages[1].extract_text()  # text on page 1 to return
             #print(textpg1)
     except FileNotFoundError:
         pdf = 'error.pdf'
@@ -51,6 +51,7 @@ def extract_pg1_text(pdf_file):                     # pass in the pdf file
             textpg1 = pdf_reader.pages[0].extract_text()  # text on page 1 has error to return
     return textpg1
 
+# BELOW NOT NEEDED WHEN USED AS IMPORT
 #pdf_file = '42'                                # test Number only .pdf
 #get_Metadata(pdf_file)                                  # call
 #extract_pg1_text(pdf_file)                              # call
