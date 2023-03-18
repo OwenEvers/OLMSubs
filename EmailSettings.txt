@@ -1,2 +1,2 @@
-yourfromemailaddress
-yourapppassword
+emailaddress
+apppassword
