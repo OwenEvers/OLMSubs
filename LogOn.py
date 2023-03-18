@@ -352,10 +352,7 @@ class Ui_LogOnUI(object):
 
     def issue_Magazine_window(self):
         nid = getNextIssueDate()  # get nid
-        self.rbtimer = QTimer()  # timer checks if radiobutton checked
-        self.rbtimer.setInterval(1000)
-        self.rbtimer.start()
-        self.rbtimer.timeout.connect(self.checkrbtimer)
+
 
         self.IssueMagWindow = QtWidgets.QMainWindow()  # setup ui
         self.ui = Ui_IssueMagWindow()
@@ -364,17 +361,23 @@ class Ui_LogOnUI(object):
         self.ui.pushButton_Lock.clicked.connect(self.issueWinLock)  # Buttons
         self.ui.pushButton_CloseApp.clicked.connect(exitClick)
         self.ui.pushButton_AddSubs.clicked.connect(self.backtoAddSubs)
-        self.ui.pushButton_MagDates.clicked.connect(self.magDates)  # need to stop rdtimer
+        self.ui.pushButton_MagDates.clicked.connect(self.magDates)
         self.ui.pushButton_ListSubs.clicked.connect(self.backtoMW)
         self.ui.pushButtonFindIssue.clicked.connect(self.find_Issue)
         self.ui.pushButtonSendNow.clicked.connect(self.send_Now)
         # set label with next publish date
         self.ui.label_IssueMonthTitle.setText(str(self.nextPubDate) + ' Issue ' + str(self.nextIssueNumber))
-        self.getMagsDirFiles()
+        self.getMagsDirFiles()                                      # List of files in Mags dir
         # populate combo with issue numbers
         self.populateComboIssues()
         self.ui.comboBox.currentIndexChanged.connect(self.issueSelected)
+        self.ui.radioButtonAll.toggled.connect(self.checkrbtimer)
+        self.ui.radioButtonLast.toggled.connect(self.checkrbtimer)
+        self.ui.radioButtonNot.toggled.connect(self.checkrbtimer)
+        self.ui.radioButtonEveryone.toggled.connect(self.checkrbtimer)
+        self.ui.radioButtonNone.toggled.connect(self.checkrbtimer)
         self.checkFileNames()                       # make sre file names are just the issue number
+
         self.IssueMagWindow.show()
 
     def issueSelected(self):
@@ -463,7 +466,7 @@ class Ui_LogOnUI(object):
         pass
 
     def magDates(self):
-        # self.rbtimer.stop()
+
         self.ui.radioButtonNone.setChecked(True)
         self.magDatesClick()
 
@@ -493,7 +496,7 @@ class Ui_LogOnUI(object):
             line = "Select who to send to"
             self.ui.textEdit.setText(line)
             self.ui.label_SelectedSubs.setText("NONE")
-            self.populateComboIssues()
+            #self.populateComboIssues()
 
     def populateComboIssues(self):  # combobox = Issue Numbers
         self.ui.comboBox.clear()
@@ -514,7 +517,7 @@ class Ui_LogOnUI(object):
         self.ui.textEdit.setText(info)
 
     def backtoMW(self):
-        self.rbtimer.stop()
+        #self.rbtimer.stop()
         self.IssueMagWindow.close()
         self.openMW()
         self.listSubs()
