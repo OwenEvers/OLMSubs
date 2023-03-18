@@ -3,4 +3,4 @@
 *.odt
 ErrorPDFTemplate.odt
 /dist/
-*.txt
+EmailSettings.txt
