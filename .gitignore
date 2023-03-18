@@ -1,6 +1,6 @@
 /Mags/
 .idea
-.odt
+*.odt
 ErrorPDFTemplate.odt
 /dist/
-.txt
+*.txt
