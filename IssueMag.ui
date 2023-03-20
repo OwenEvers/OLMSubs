@@ -909,9 +909,27 @@ background-image: url(:/BGs/Images/Transparent.png);</string>
             <property name="text">
              <string>                        .</string>
             </property>
-            <property name="icon">
-             <iconset resource="MainWin.qrc">
-              <normaloff>:/Icons/Images/fi-bs-book-alt.svg</normaloff>:/Icons/Images/fi-bs-book-alt.svg</iconset>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>132</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-image: url(:/Buttons/Images/BTNAddDriveLink.png);</string>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
@@ -1119,7 +1137,7 @@ background-color: rgb(204, 102, 102);</string>
                 </font>
                </property>
                <property name="text">
-                <string>Select Issue Number Then Who to Send This Issue To</string>
+                <string>Select Issue Number Then Select Group. Add Drive Link</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -1395,6 +1413,46 @@ background-color: rgb(255, 153, 102);</string>
            <number>0</number>
           </property>
           <item>
+           <widget class="QLabel" name="label_6">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(153, 153, 255);</string>
+            </property>
+            <property name="text">
+             <string>Add Drive Link - Click Button Above</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEditDriveLink">
+            <property name="font">
+             <font>
+              <family>System-ui</family>
+              <pointsize>12</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>ForbiddenCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string>Google Drive Link to OLM Issue</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(204, 153, 204);</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="placeholderText">
+             <string>Not Yet Added</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QTextEdit" name="textEdit">
             <property name="font">
              <font>
@@ -1524,7 +1582,7 @@ background-color: rgb(154, 153, 150);</string>
                 <string notr="true">color: rgb(153, 153, 255);</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string>Select Issue</string>
                </property>
               </widget>
              </item>
@@ -1563,7 +1621,7 @@ background-color: rgb(154, 153, 150);</string>
                 <string notr="true">color: rgb(153, 153, 255);</string>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string>Select Group</string>
                </property>
               </widget>
              </item>
