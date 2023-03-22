@@ -1,8 +1,10 @@
 /Mags/
-.idea
+*.idea
 *.odt
 ErrorPDFTemplate.odt
 /dist/
 EmailSettings.txt
 Subscribers.csv
 31.pdf
+client_secrets.json
+settings.yaml
